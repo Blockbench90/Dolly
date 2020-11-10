@@ -26,27 +26,6 @@ export const useStylesSignIn = makeStyles((theme) => ({
         height: '197%',
         color: 'aqua'
     },
-    // leftSideListInfo: {
-    //     position: 'relative',
-    //     listStyle: 'none',
-    //     padding: 0,
-    //     margin: 0,
-    //     maxWidth: 380,
-    //     '& h6': {
-    //         display: 'flex',
-    //         alignItems: 'center',
-    //         color: 'white',
-    //         fontWeight: 700,
-    //         fontSize: 20,
-    //     },
-    // },
-    // leftSideListInfoItem: {
-    //     marginBottom: 40,
-    // },
-    // leftSideListInfoIcon: {
-    //     fontSize: 32,
-    //     marginRight: 15,
-    // },
     loginSide: {
         position: 'relative',
         display: 'flex',
@@ -63,8 +42,13 @@ export const useStylesSignIn = makeStyles((theme) => ({
     loginSideTitle: {
         fontWeight: 700,
         fontSize: 32,
-        marginBottom: 60,
+        marginBottom: 50,
         marginTop: 20,
+        paddingLeft: theme.spacing(5)
+    },
+    loginSubTitle: {
+        marginBottom: theme.spacing(3),
+        paddingLeft: theme.spacing(9)
     },
     loginSideField: {
         marginBottom: 18,
@@ -96,25 +80,26 @@ export const SignIn: React.FC = (): React.ReactElement => {
 
     return (
         <div className={classes.wrapper}>
+
             <section className={classes.leftSide}>
                 <ColorLensIcon color="primary" className={classes.leftSideBigIcon}/>
             </section>
+            {/*БЛОК "ЗАГОЛОВКОВ"*/}
             <section className={classes.loginSide}>
                 <div className={classes.loginSideWrapper}>
                     <ColorLensIcon color="primary" className={classes.loginSideTwitterIcon}/>
                     <Typography className={classes.loginSideTitle} gutterBottom variant="h4">
-                        Услышал от деда, мамы, дяди, тети...
-                    </Typography>
-                    <Typography>
-                        <b>Не храни это в себе, поделись!</b>
-                    </Typography>
-                    <br/>
+                        Услышал от деда, мамы, дяди, тети...</Typography>
+                    <Typography className={classes.loginSubTitle}>
+                        <b>Не храни это в себе, поделись!</b></Typography>
                     <Button onClick={handleClickOpenSignUp} style={{marginBottom: 20}}
                             variant="contained" color="primary" fullWidth>
                         Зарегистрироваться</Button>
+
                     <Button onClick={handleClickOpenSignIn} variant="outlined"
                             color="primary" fullWidth>
                         Войти</Button>
+                    {/*БЛОК "ВОЙТИ"*/}
                     <ModalBlock visible={visibleModal === 'signIn'} onClose={handleCloseModal}
                         classes={classes} title="Войти в аккаунт">
                         <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
@@ -130,6 +115,7 @@ export const SignIn: React.FC = (): React.ReactElement => {
                             </FormGroup>
                         </FormControl>
                     </ModalBlock>
+                    {/*БЛОК "РЕГИСТРАЦИИ"*/}
                     <ModalBlock visible={visibleModal === 'signUp'} onClose={handleCloseModal}
                                 classes={classes} title="Создайте учетную запись">
                         <FormControl className={classes.loginFormControl} component="fieldset" fullWidth>
@@ -149,9 +135,10 @@ export const SignIn: React.FC = (): React.ReactElement => {
                             </FormGroup>
                         </FormControl>
                     </ModalBlock>
+
                 </div>
             </section>
         </div>
     );
 };
-export default SignIn
+
