@@ -9,6 +9,11 @@ import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineO
 import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
 import ListOutlinedIcon from '@material-ui/icons/ListOutlined';
 import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
+import CommentIcon from '@material-ui/icons/RateReview';
+import RepostIcon from '@material-ui/icons/Repeat';
+import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import SheareIcon from '@material-ui/icons/OpenInBrowserOutlined';
+import classNames from 'classnames';
 import {Avatar, Container, IconButton, InputAdornment, InputBase, Typography} from "@material-ui/core";
 import gray from '@material-ui/core/colors/grey';
 
@@ -39,6 +44,12 @@ const useHomeStyles = makeStyles(() => ({
     sideMenuListItemIcon: {
         fontSize: 35
     },
+    story: {
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: 'rgb(245, 248, 250)'
+        }
+    },
     storyWrapper: {
         borderRadius: 0,
         height: '100%',
@@ -54,6 +65,11 @@ const useHomeStyles = makeStyles(() => ({
         '& h6': {
           fontWeight: 800
         },
+    },
+    storyFooter: {
+      display: 'flex',
+      justifyContent: 'space-between',
+        width: 450
     },
     storyUserName: {
         color: gray[500]
@@ -125,7 +141,7 @@ const classes = useHomeStyles()
                         <Paper variant="outlined" className={classes.storyHeader}>
                             <Typography variant="h6">Главная</Typography>
                         </Paper>
-                        <Paper variant="outlined" className={classes.storyHeader}>
+                        <Paper variant="outlined" className={classNames(classes.story, classes.storyHeader)}>
                             <Grid container spacing={3}>
                                 <Grid item xs={1}>
                                     <Avatar alt="Avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
@@ -137,6 +153,29 @@ const classes = useHomeStyles()
                                         dark or contrastText), as the other colors will be calculated by createMuiTheme(),
                                         as described in the Theme customization section.
                                     </Typography>
+                                    <div className={classes.storyFooter}>
+                                        <div>
+                                            <IconButton>
+                                                <CommentIcon style={{fontSize: 20}}/>
+                                            </IconButton>
+                                            <span>1</span>
+                                        </div>
+                                        <div>
+                                            <IconButton>
+                                                <RepostIcon style={{fontSize: 20}}/>
+                                            </IconButton>
+                                        </div>
+                                        <div>
+                                            <IconButton>
+                                                <LikeIcon style={{fontSize: 20}}/>
+                                            </IconButton>
+                                        </div>
+                                        <div>
+                                            <IconButton>
+                                                <SheareIcon style={{fontSize: 20}}/>
+                                            </IconButton>
+                                        </div>
+                                    </div>
                                 </Grid>
                             </Grid>
                         </Paper>
