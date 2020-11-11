@@ -1,23 +1,15 @@
 import React from 'react'
-import {createStyles, makeStyles, withStyles} from '@material-ui/core/styles';
+import {createStyles, makeStyles, Theme, withStyles} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import ColorLensIcon from '@material-ui/icons/ColorLens';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import NotificationsActiveOutlinedIcon from '@material-ui/icons/NotificationsActiveOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import BookmarkBorderOutlinedIcon from '@material-ui/icons/BookmarkBorderOutlined';
-import ListOutlinedIcon from '@material-ui/icons/ListOutlined';
-import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined';
-import CommentIcon from '@material-ui/icons/RateReview';
-import RepostIcon from '@material-ui/icons/Repeat';
-import LikeIcon from '@material-ui/icons/FavoriteBorderOutlined';
-import SheareIcon from '@material-ui/icons/OpenInBrowserOutlined';
-import classNames from 'classnames';
-import {Avatar, Container, IconButton, InputAdornment, InputBase, Typography} from "@material-ui/core";
+import {Container, InputAdornment, InputBase, Typography} from "@material-ui/core";
 import gray from '@material-ui/core/colors/grey';
+import {Story} from "../components/Story";
+import {SideMenu} from "../components/SideMenu";
 
-const useHomeStyles = makeStyles(() => ({
+
+export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
         height: '100vh'
     },
@@ -27,8 +19,26 @@ const useHomeStyles = makeStyles(() => ({
         margin: 0
     },
     sideMenuListItem: {
-        display: 'flex',
-        alignItems: 'center'
+        cursor: 'pointer',
+        '&:hover': {
+            '& div': {
+                backgroundColor: 'rgba(29, 161, 242, 0.1)',
+                '& h6': {
+                    color: 'red'
+                },
+            },
+        },
+        '& div': {
+            display: 'inline-flex',
+            alignItems: 'center',
+            position: 'relative',
+            left: -10,
+            padding: '0 25px 0 20px',
+            borderRadius: 30,
+            height: 50,
+            marginBottom: 10,
+            transition: "background-color 0.15 ease-in-out"
+        }
     },
     sideMenuListItemLabel: {
         fontWeight: 700,
@@ -42,7 +52,8 @@ const useHomeStyles = makeStyles(() => ({
         fontSize: 42
     },
     sideMenuListItemIcon: {
-        fontSize: 35
+        fontSize: 35,
+        marginLeft: -5
     },
     story: {
         cursor: 'pointer',
@@ -61,136 +72,110 @@ const useHomeStyles = makeStyles(() => ({
         borderLeft: '0',
         borderRight: '0',
         borderRadius: '0',
-        padding: '10px 15px',
+        padding: '15px 15px',
         '& h6': {
-          fontWeight: 800
+            fontWeight: 800
         },
     },
     storyFooter: {
-      display: 'flex',
-      justifyContent: 'space-between',
+        display: 'flex',
+        position: 'relative',
+        left: -14,
+        justifyContent: 'space-between',
         width: 450
     },
     storyUserName: {
         color: gray[500]
+    },
+    storyAvatar: {
+        width: theme.spacing(5),
+        height: theme.spacing(5),
     }
 }))
 const SearchTextField = withStyles(() =>
-   createStyles({
-       input: {
-           borderRadius: 30,
-           backgroundColor: '#E6ECF0',
-           height: 40,
-           padding: 0
-       }
-                })
+    createStyles({
+        input: {
+            borderRadius: 30,
+            backgroundColor: '#E6ECF0',
+            height: 40,
+            padding: 0
+        }
+    })
 )(InputBase);
 
 const Home = () => {
-const classes = useHomeStyles()
+    const classes = useHomeStyles()
     return (
         <Container maxWidth="lg" className={classes.wrapper}>
             <Grid container spacing={3}>
                 <Grid item xs={3}>
-                    <ul className={classes.sideMenuList}>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton className={classes.logo} color="primary" aria-label="add an alarm">
-                                <ColorLensIcon className={classes.logoIcon}/>
-                            </IconButton>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <SearchOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Поиск</Typography>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <NotificationsActiveOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Уведомления</Typography>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <ChatBubbleOutlineOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Сообщения</Typography>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <BookmarkBorderOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Закладки</Typography>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <ListOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Список</Typography>
-                        </li>
-                        <li className={classes.sideMenuListItem}>
-                            <IconButton aria-label="add an alarm">
-                                <PermIdentityOutlinedIcon className={classes.sideMenuListItemIcon}/>
-                            </IconButton>
-                            <Typography className={classes.sideMenuListItemLabel}>Профиль</Typography>
-                        </li>
-                    </ul>
+                    <SideMenu classes={classes}/>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper className={classes.storyWrapper} variant="outlined">
                         <Paper variant="outlined" className={classes.storyHeader}>
                             <Typography variant="h6">Главная</Typography>
                         </Paper>
-                        <Paper variant="outlined" className={classNames(classes.story, classes.storyHeader)}>
-                            <Grid container spacing={3}>
-                                <Grid item xs={1}>
-                                    <Avatar alt="Avatar" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"/>
-                                </Grid>
-                                <Grid item xs={11}>
-                                    <Typography><b>ivan</b> <span className={classes.storyUserName}>test.prog@rockyboy</span></Typography>
-                                    <Typography variant="body1" gutterBottom>
-                                        Only the main shades need be provided (unless you wish to further customize light,
-                                        dark or contrastText), as the other colors will be calculated by createMuiTheme(),
-                                        as described in the Theme customization section.
-                                    </Typography>
-                                    <div className={classes.storyFooter}>
-                                        <div>
-                                            <IconButton>
-                                                <CommentIcon style={{fontSize: 20}}/>
-                                            </IconButton>
-                                            <span>1</span>
-                                        </div>
-                                        <div>
-                                            <IconButton>
-                                                <RepostIcon style={{fontSize: 20}}/>
-                                            </IconButton>
-                                        </div>
-                                        <div>
-                                            <IconButton>
-                                                <LikeIcon style={{fontSize: 20}}/>
-                                            </IconButton>
-                                        </div>
-                                        <div>
-                                            <IconButton>
-                                                <SheareIcon style={{fontSize: 20}}/>
-                                            </IconButton>
-                                        </div>
-                                    </div>
-                                </Grid>
-                            </Grid>
-                        </Paper>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
+                        <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
+                               classes={classes} user={{
+                            userName: "Ivan",
+                            fullName: "rockyboy",
+                            avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
+                        }}/>
                     </Paper>
                 </Grid>
                 <Grid item xs={3}>
                     <SearchTextField
                         placeholder="Поиск по рассказам"
                         inputProps={{
-                        startAdornment: (
-                            <InputAdornment position="start">
-                                <SearchOutlinedIcon/>
-                            </InputAdornment>
-                        )
-                    }} fullWidth />
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchOutlinedIcon/>
+                                </InputAdornment>
+                            )
+                        }} fullWidth/>
                 </Grid>
             </Grid>
         </Container>
