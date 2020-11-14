@@ -1,14 +1,5 @@
 import React from 'react';
-import {
-    Container,
-    createStyles,
-    Grid,
-    InputAdornment,
-    InputBase,
-    Paper, Theme,
-    Typography,
-    withStyles
-} from '@material-ui/core';
+import { colors, Container, createStyles, Grid, InputAdornment, InputBase, Paper, Theme, Typography, withStyles } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/SearchOutlined';
 import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -21,16 +12,13 @@ import ListItemText from '@material-ui/core/ListItemText/ListItemText';
 import List from '@material-ui/core/List/List';
 import Button from '@material-ui/core/Button/Button';
 
-import { AddTweetForm } from '../../components/AddTweetForm';
 
 import { SearchTextField } from '../components/SearchTextField';
 import {Story} from "../components/Story";
 import {SideMenu} from "../components/SideMenu";
 import {makeStyles} from "@material-ui/core/styles";
-
-
-
-
+import {AddStoryForm} from "../components/AddStoryForm";
+import grey from "@material-ui/core/colors/grey";
 
 export const useHomeStyles = makeStyles((theme: Theme) => ({
     wrapper: {
@@ -108,19 +96,26 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
             fontWeight: 800,
         },
     },
+    storyHeaderUser: {
+        display: 'flex',
+        alignItems: 'center',
+    },
+    storyHeaderBackButton: {
+        marginRight: 20,
+    },
     story: {
         display: 'flex',
         cursor: 'pointer',
         paddingTop: 15,
-        paddingLeft: 20,
+        paddingLeft: 10,
         '&:hover': {
             backgroundColor: 'rgb(245, 248, 250)',
         },
     },
     storyAvatar: {
-        width: theme.spacing(6.5),
-        height: theme.spacing(6.5),
-        marginRight: 15,
+        width: theme.spacing(5.5),
+        height: theme.spacing(5.5),
+        marginRight: 10,
     },
     storyFooter: {
         display: 'flex',
@@ -131,6 +126,27 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     storyUserName: {
         color: grey[500],
+    },
+
+    fullStory: {
+        padding: 22,
+        paddingBottom: 0,
+    },
+    fullStoryText: {
+        fontSize: 24,
+        marginTop: 20,
+        marginBottom: 20,
+        lineHeight: 1.3125,
+        wordBreak: 'break-word',
+    },
+    fullStoryFooter: {
+        margin: '0 auto',
+        borderTop: '1px solid #E6ECF0',
+        left: 0,
+        maxWidth: '100%',
+        justifyContent: 'space-around',
+        padding: '2px 0',
+        marginTop: 20,
     },
     rightSide: {
         paddingTop: 20,
@@ -212,19 +228,32 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
         display: 'flex',
         alignItems: 'center',
     },
+    sideProfile: {
+        display: 'flex',
+        alignItems: 'center',
+        position: 'fixed',
+        bottom: 30,
+        padding: '10px 15px',
+        width: 260,
+        borderRadius: 50,
+        cursor: 'pointer',
+        '&:hover': {
+            backgroundColor: colors.lightBlue[50],
+        },
+    },
+    sideProfileInfo: {
+        flex: 1,
+        marginLeft: 10,
+        '& b': {
+            fontSize: 16,
+        },
+    },
 }))
-// const SearchTextField = withStyles(() =>
-//     createStyles({
-//         input: {
-//             borderRadius: 30,
-//             backgroundColor: '#E6ECF0',
-//             height: 40,
-//             padding: 0
-//         }
-//     })
-// )(InputBase);
+
+
 
 const Home = () => {
+    const isLoading = false
     const classes = useHomeStyles()
     return (
         <Container maxWidth="lg" className={classes.wrapper}>
@@ -239,6 +268,7 @@ const Home = () => {
                         </Paper>
                         <Paper>
                             <div className={classes.addForm}>
+                                <AddStoryForm classes={classes}/>
                                 <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
                                        classes={classes} user={{
                                     userName: "Ivan",
@@ -248,25 +278,16 @@ const Home = () => {
                             </div>
                             <div className={classes.addFormBottomLine}/>
                         </Paper>
-                            {/*Прелоадер*/}
-                            {/*<div className={classes.storyCentred}>*/}
-                            {/*    <CircularProgress />*/}
-                            {/*</div>*/}
-
-                            <Story text={"Небольшая история о главном. Как волк ходил на зайца, но заяц тот еще жучара"}
-                                   classes={classes} user={{
-                                userName: "Ivan",
-                                fullName: "rockyboy",
-                                avatarUrl: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-                            }}/>
-
+                        {isLoading ? (<div className={classes.storyCentred}>
+                            <CircularProgress />
+                        </div>) : ('')}
                     </Paper>
                 </Grid>
                 <Grid sm={3} md={3} item>
                     <div className={classes.rightSide}>
                         <SearchTextField
                             variant="outlined"
-                            placeholder="Поиск по Твиттеру"
+                            placeholder="Поиск"
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -278,15 +299,15 @@ const Home = () => {
                         />
                         <Paper className={classes.rightSideBlock}>
                             <Paper className={classes.rightSideBlockHeader} variant="outlined">
-                                <b>Актуальные темы</b>
+                                <b>Топ темы</b>
                             </Paper>
                             <List>
                                 <ListItem className={classes.rightSideBlockItem}>
                                     <ListItemText
-                                        primary="Санкт-Петербург"
+                                        primary="Киев"
                                         secondary={
                                             <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 3 331
+                                                Рассказов: 3 331
                                             </Typography>
                                         }
                                     />
@@ -294,10 +315,10 @@ const Home = () => {
                                 <Divider component="li" />
                                 <ListItem className={classes.rightSideBlockItem}>
                                     <ListItemText
-                                        primary="#коронавирус"
+                                        primary="Рыбак и море"
                                         secondary={
                                             <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 163 122
+                                                Рассказов: 163 122
                                             </Typography>
                                         }
                                     />
@@ -305,10 +326,10 @@ const Home = () => {
                                 <Divider component="li" />
                                 <ListItem className={classes.rightSideBlockItem}>
                                     <ListItemText
-                                        primary="Беларусь"
+                                        primary="Как то раз"
                                         secondary={
                                             <Typography component="span" variant="body2" color="textSecondary">
-                                                Твитов: 13 554
+                                                Рассказов: 13 554
                                             </Typography>
                                         }
                                     />
@@ -318,7 +339,7 @@ const Home = () => {
                         </Paper>
                         <Paper className={classes.rightSideBlock}>
                             <Paper className={classes.rightSideBlockHeader} variant="outlined">
-                                <b>Кого читать</b>
+                                <b>Что почитать?</b>
                             </Paper>
                             <List>
                                 <ListItem className={classes.rightSideBlockItem}>
@@ -329,10 +350,10 @@ const Home = () => {
                                         />
                                     </ListItemAvatar>
                                     <ListItemText
-                                        primary="Dock Of Shame"
+                                        primary="Сусанин"
                                         secondary={
                                             <Typography component="span" variant="body2" color="textSecondary">
-                                                @FavDockOfShame
+                                                @IvanSusanin
                                             </Typography>
                                         }
                                     />

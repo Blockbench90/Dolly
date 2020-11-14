@@ -10,14 +10,14 @@ import EmojiIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import { useHomeStyles } from "../pages/Home";
 
 
-interface AddTweetFormProps {
+interface AddStotyFormProps {
     classes: ReturnType<typeof useHomeStyles>;
     maxRows?: number;
 }
 
 const MAX_LENGTH = 280;
 
-export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows, }: AddTweetFormProps): React.ReactElement => {
+export const AddStoryForm: React.FC<AddStotyFormProps> = ({classes, maxRows, }: AddStotyFormProps): React.ReactElement => {
     const [text, setText] = React.useState<string>('');
     const textLimitPercent = Math.round((text.length / 280) * 100);
     const textCount = MAX_LENGTH - text.length;
@@ -36,9 +36,9 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows, }: 
         <div>
             <div className={classes.addFormBody}>
                 <Avatar
-                    className={classes.tweetAvatar}
+                    className={classes.storyAvatar}
                     alt={`Аватарка пользователя UserAvatar`}
-                    src="https://pbs.twimg.com/profile_images/796061890451542016/J-O1AguD_bigger.jpg"
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
                 />
                 <TextareaAutosize
                     onChange={handleChangeTextare}
@@ -49,7 +49,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows, }: 
                 />
             </div>
             <div className={classes.addFormBottom}>
-                <div className={classNames(classes.tweetFooter, classes.addFormBottomActions)}>
+                <div className={classNames(classes.storyFooter, classes.addFormBottomActions)}>
                     <IconButton color="primary">
                         <ImageOutlinedIcon style={{ fontSize: 26 }} />
                     </IconButton>
@@ -84,7 +84,7 @@ export const AddTweetForm: React.FC<AddTweetFormProps> = ({classes, maxRows, }: 
                         disabled={text.length >= MAX_LENGTH}
                         color="primary"
                         variant="contained">
-                        Твитнуть
+                        Опубликовать
                     </Button>
                 </div>
             </div>
